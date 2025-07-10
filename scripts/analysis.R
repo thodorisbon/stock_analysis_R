@@ -52,6 +52,25 @@ ggplot(wide_monthly, aes(x = month)) +
        x = "Date", y = "Adjusted Close") +
   theme_minimal()
 
+#Log returns to compare the perfomance
+returns <- wide_monthly %>%
+  mutate(
+    return_DowJones = log(DowJones/lag(DowJones)),
+    return_SnP = log(`S&P500`/lag(`S&P500`)),
+    return_Nasdaq = log(Nasdaq/lag(Nasdaq))
+  )
+
+#Plot returns
+ggplot(returns,aes(x=month)) +
+  geom_line(aes(y = return_DowJones), color = "blue", linewidth = 0.8) +
+  geom_line(aes(y = return_SnP), color = "green", linewidth = 0.8) +
+  geom_line(aes(y = return_Nasdaq), color = "purple", linewidth = 0.8) +
+  labs(title = "Monthly Log Returns of Major U.S. Indices",
+       x = "Date", y = "Log Return") +
+  theme_minimal()
+
+
+
 
                             
 
